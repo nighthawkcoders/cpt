@@ -61,6 +61,47 @@ class UserAPI:
             users = User.query.all()    # read/extract all users from database
             json_ready = [user.read() for user in users]  # prepare output in json
             return jsonify(json_ready)  # jsonify creates Flask response object, more specific to APIs than json.dumps
+        @token_required
+        def put(self,current_user):
+            content=['likes','dislikes','reviews']
+        
+        @token_required
+        def post_review(self,current_user): # posting a review
+            body = request.get_json()
+            token = request.cookies.get("jwt")
+            cur_user= data=jwt.decode(token, current_app.config["SECRET_KEY"], algorithms=["HS256"])['_uid']
+            
+            owner=body.get('owner')
+            
+        
+        @token_required
+        def create_design(self,current_user):
+            body= request.get_json()
+            token = request.cookies.get("jwt")
+            cur_user= data=jwt.decode(token, current_app.config["SECRET_KEY"], algorithms=["HS256"])['_uid']
+            code=body.get('code')
+            likes=0
+            dislikes=0
+            reviews=[]
+            # user_design= design()
+            
+        
+        @token_required
+        def add_like(self,current_user):
+            body=request.get_json
+            token = request.cookies.get("jwt")
+            cur_user= data=jwt.decode(token, current_app.config["SECRET_KEY"], algorithms=["HS256"])['_uid']
+            owner=body.get('owner')
+            
+            
+        
+        
+             
+            
+        
+        
+
+            
     
     class _Security(Resource):
         def post(self):

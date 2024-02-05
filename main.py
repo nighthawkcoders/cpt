@@ -1,3 +1,4 @@
+import sqlite3
 import threading
 
 # import "packages" from flask
@@ -41,6 +42,25 @@ def index():
 def table():
     return render_template("table.html")
 
+@app.route('/createuser')
+def creatinguser():
+    sqliteConnection = sqlite3.connect('SQLite_Python.db')
+    cursor = sqliteConnection.cursor()
+    print("Successfully Connected to SQLite")
+
+    # sqlite_insert_query = """INSERT INTO SqliteDb_developers
+    #                       (id, name, email, joining_date, salary) 
+    #                        VALUES 
+    #                       (1,'James','james@pynative.com','2019-03-17',8000)"""
+    
+    
+
+    count = cursor.execute(sqlite_insert_query)
+    sqliteConnection.commit()
+    print("Record inserted successfully into SqliteDb_developers table ", cursor.rowcount)
+    cursor.close()
+    
+    
 @app.before_request
 def before_request():
     # Check if the request came from a specific origin
@@ -56,6 +76,7 @@ custom_cli = AppGroup('custom', help='Custom commands')
 def generate_data():
     initUsers()
     initPlayers()
+
 
 # Register the custom command group with the Flask application
 app.cli.add_command(custom_cli)
